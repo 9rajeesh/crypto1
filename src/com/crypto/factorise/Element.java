@@ -8,6 +8,7 @@ public class Element implements Serializable {
 	private Element a = null;
 	private Element b = null;
 	
+	
 	private String a1 = null;
 	private String b1 = null;
 		
