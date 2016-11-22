@@ -136,26 +136,16 @@ public class Element implements Serializable {
     public Integer evaluate(Map valueMap){
     	
     	
-    return null;
+    ValueElement a = (ValueElement) applyOperator(this.a,this.b,this.operator);
+    	    	
+    return a.getValue();
     }
     
     
     
     private Element applyOperator(Element element1,Element element2,String operator){
     	
-    	Element a = element1.a;
-    	Element b = element1.b;
-    	
-    	String a1 = element1.a1;
-    	String b1 = element1.b1;
-    	
-    	
-    	Element c = element1.a;
-    	Element d = element1.b;
-    	
-    	String c1 = element1.a1;
-    	String d1 = element1.b1;
-    	
+    
     	
     	if(isSimple(element1) && isSimple(element2)){
     	
@@ -180,7 +170,7 @@ public class Element implements Serializable {
     	
     	else{
     	
-    	applyOperator(applyOperator(element1.a,element1.b,element1.operator), 
+    	 applyOperator(applyOperator(element1.a,element1.b,element1.operator), 
     			      applyOperator(element2.a,element2.b,element2.operator),
     			      operator);
     	
@@ -193,29 +183,29 @@ public class Element implements Serializable {
 	
 		
 		if(operator2.equals("+")){
-		    return new ValueElement(element1.getA() + element2.getA());
+		    return new ValueElement(element1.getValue() + element2.getValue());
 		}
 		
 		else if(operator2.equals("-")){
-			return new ValueElement(element1.getA() - element2.getA());
+			return new ValueElement(element1.getValue() - element2.getValue());
 		}
 		
 		else if(operator2.equals("*")){
-			return new ValueElement(element1.getA() * element2.getA());
+			return new ValueElement(element1.getValue() * element2.getValue());
 		}
 		
 		else if(operator2.equals("/")){
-			return new ValueElement(element1.getA() / element2.getA());
+			return new ValueElement(element1.getValue() / element2.getValue());
 		}
 		
 		else if(operator2.contains("k")){
 			
 			int k1 = getModulo(operator2);
 			
-			Integer a = element1.getA();
+			Integer a = element1.getValue();
 			
 			if (a ==null){
-			a = element2.getA();
+			a = element2.getValue();
 			}
 			
 			return new ValueElement( a % k1 );
@@ -227,16 +217,61 @@ public class Element implements Serializable {
 		
 		return null;
 	}
+	
+	
+
+	public Element getA() {
+		return a;
+	}
+
+	public void setA(Element a) {
+		this.a = a;
+	}
+
+	public Element getB() {
+		return b;
+	}
+
+	public void setB(Element b) {
+		this.b = b;
+	}
+
+	public String getA1() {
+		return a1;
+	}
+
+	public void setA1(String a1) {
+		this.a1 = a1;
+	}
+
+	public String getB1() {
+		return b1;
+	}
+
+	public void setB1(String b1) {
+		this.b1 = b1;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
 
 	private Integer  getModulo(String operator2) {
 		
+		return Integer.parseInt(operator2.substring(1));
 		
-		return null;
+		
 	}
 
 	private boolean isSimple(Element element1) {
 	
-		
+		if(element1.a==null && element1.a1!=null && element1.operator==null){
+			return true;
+		}
 		
 		
 		return false;

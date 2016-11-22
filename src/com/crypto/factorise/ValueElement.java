@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ValueElement extends Element implements Serializable{
 	
 	
-	private Integer a;
+	private Integer value;
 	
 	
 	public ValueElement(){
@@ -14,22 +14,25 @@ public class ValueElement extends Element implements Serializable{
 	
 	public ValueElement(Integer a){
 		super();
-		this.a=a;
+		this.value=a;
 	}
 	
 	
 	public ValueElement(Element element){
 		super();
+		String a = element.getA1();
+		this.value = Integer.parseInt(a);
+		
 	}
 
 
-	public Integer getA() {
-		return a;
+	public Integer getValue() {
+		return value;
 	}
 
 
 	public void setA(Integer a) {
-		this.a = a;
+		this.value = a;
 	}
 	
 	
