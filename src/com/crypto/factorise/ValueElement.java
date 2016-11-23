@@ -10,16 +10,30 @@ public class ValueElement extends Element implements Serializable{
 	
 	private Integer value;
 	
+	public Integer getValue() {
+		return value;
+	}
 	
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+
 	public ValueElement(){
 		super();
 	}
+	
 	
 	public ValueElement(Element element,Map<String,Integer> valueMap) throws UnAssignedValueException{
 		super();
 		
 		
-		if(isNumber(element.getA1())){
+		if(element instanceof ValueElement){
+		ValueElement ve = (ValueElement)element;
+		this.value = ve.value;
+		}
+		
+		else if(isNumber(element.getA1())){
 		this.value = Integer.parseInt(element.getA1());	
 		}
 		
@@ -27,6 +41,7 @@ public class ValueElement extends Element implements Serializable{
 		
 		Integer value = (Integer)valueMap.get(element.getA1());
 		if(value==null){
+		System.out.println("Key is:"+element.getA1());	
 		throw new UnAssignedValueException();
 		}
 		this.value=value;
@@ -60,9 +75,7 @@ public class ValueElement extends Element implements Serializable{
 	}
 
 
-	public Integer getValue() {
-		return value;
-	}
+	
 
 
 	public void setA(Integer a) {

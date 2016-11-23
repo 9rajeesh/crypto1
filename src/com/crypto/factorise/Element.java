@@ -31,6 +31,16 @@ public class Element implements Serializable {
 	public Element() {
 		
 	}
+	
+	/**
+	 * Simple Element
+	 * 
+	 */
+	public Element(String a) {
+		this.a1 = a;
+		
+	}
+	
 		
 	/**
 	 * Unary operator with a simple Element
@@ -91,7 +101,7 @@ public class Element implements Serializable {
 	}
 	
 	/**
-	 * Prints out the canonical tree structure on the console - System.out
+	 * Prints out the canonical tree structure on the console - //System.out
 	 * 
 	 */
 	
@@ -251,10 +261,7 @@ public class Element implements Serializable {
 		 
 	 }
 	 
-	 
-	 
-	 
-	 
+	 	 
 	 /**Computes the mathematical value of the Element by substituting all the 
 	 * variables with the provided values.
 	 * 
@@ -285,7 +292,7 @@ public class Element implements Serializable {
     	
     	else if(isSimple(element1) && !isSimple(element2)){
     		
-    		applyOperator(new ValueElement(element1,valueMap), 
+    		return	applyOperator(new ValueElement(element1,valueMap), 
   			              applyOperator(element2.a,element2.b,element2.operator,valueMap),
   			              operator,
   			              valueMap);
@@ -294,7 +301,7 @@ public class Element implements Serializable {
     	
     	else if(!isSimple(element1) && isSimple(element2)){
     		
-    		applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
+    		return	applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
     				     new ValueElement(element2,valueMap),
 		                 operator,
 		                 valueMap);
@@ -303,14 +310,14 @@ public class Element implements Serializable {
     	
     	else{
     	
-    	 applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
-    			      applyOperator(element2.a,element2.b,element2.operator,valueMap),
-    			      operator,
-    			      valueMap);
+    		return applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
+    			       applyOperator(element2.a,element2.b,element2.operator,valueMap),
+    			       operator,
+    			       valueMap);
     	
     	}
     	
-     return null;
+   
     }
 
 	private Element calculate(ValueElement element1, ValueElement element2, String operator2) {
@@ -344,11 +351,8 @@ public class Element implements Serializable {
 			
 			return new ValueElement( a % k1 );
 		}
-		
-		
-		
-		
-		
+			
+		//System.out.println("returning null:");
 		return null;
 	}
 	
@@ -403,6 +407,12 @@ public class Element implements Serializable {
 
 	private boolean isSimple(Element element1) {
 	
+		//System.out.println(element1.a + "     "+element1.b +"      " +  element1.a1);
+	
+		if(element1 instanceof ValueElement){
+		return true;
+		}
+		
 		if(element1.a==null && element1.a1!=null && element1.operator==null){
 			return true;
 		}
