@@ -1,7 +1,16 @@
 package com.crypto.factorise;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+
+import com.crypto.factorise.exceptions.UnAssignedValueException;
 
 public class Element implements Serializable {
 
@@ -97,9 +106,64 @@ public class Element implements Serializable {
 	 * 
 	 */
 	@Override
-	public Element clone(){
-		
-		return null;
+	public Element clone() throws CloneNotSupportedException {
+
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
+		byte[] yourBytes = null;
+
+		try {
+
+			out = new ObjectOutputStream(bos);
+			out.writeObject(this);
+			out.flush();
+			yourBytes = bos.toByteArray();
+
+		}
+
+		catch (IOException e) {
+			throw new CloneNotSupportedException();
+		}
+
+		finally {
+			try {
+				bos.close();
+			} catch (IOException e) {
+				throw new CloneNotSupportedException();
+			}
+
+		}
+
+		Object o = null;
+		ByteArrayInputStream bis = new ByteArrayInputStream(yourBytes);
+		ObjectInput in = null;
+		try {
+			in = new ObjectInputStream(bis);
+			o = in.readObject();
+
+		}
+
+		catch (IOException ex) {
+			throw new CloneNotSupportedException();
+		}
+
+		catch (ClassNotFoundException ex) {
+			throw new CloneNotSupportedException();
+		}
+
+		finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+
+			} catch (IOException ex) {
+				throw new CloneNotSupportedException();
+			}
+
+		}
+
+		return (Element) o;
 	}
 	
 	
@@ -110,69 +174,139 @@ public class Element implements Serializable {
 	 * 
 	 */
 
-	public Element substitute(String variableName,String value){
+	public void substitute(String variableName,String value){
 		
-		return null;	
+	zoomIn(this.a,this.b,variableName,value);
 	}
 	
 	
+	private void zoomIn(Element a, Element b,String variableName,String value){
+		
+		if(!isSimple(a)){
+		zoomIn(a.a,a.b,variableName,value);
+		}
+		
+		else{
+		String variableNameLocal = a.a1;
+		if(variableNameLocal!=null && variableNameLocal.equals(variableName)){
+		//This has to be replaced by the value provided	
+		 a.a1=value;
+		  }
+		}
+		
+		if(!isSimple(b)){
+		zoomIn(b.a,b.b,variableName,value);
+		}
+		
+		else{
+		String variableNameLocal = b.a1;
+		if(variableNameLocal!=null && variableNameLocal.equals(variableName)){
+		//This has to be replaced by the value provided	
+		 b.a1=value;
+		  }
+	    }
+		
+	}
+	
+		
 	/**Links all the occurences of variableName in the Element to the referenced element
 	 * 
 	 * 
 	 * 
 	 */
 	
-	 public Element bindTo(String variableName, Element element){
+	 public void bindTo(String variableName, Element element){
 		
-	 return null;	
+	   zoom2(this.a,this.b,variableName,element);
 	}
 	
-    /**Computes the mathematical value of the Element by substituting all the 
+   
+	 private void zoom2(Element a, Element b,String variableName, Element element){
+		 
+		 
+		 if(!isSimple(a)){
+		 zoom2(a.a, a.b, variableName, element);
+		 }
+		 else{
+				String variableNameLocal = a.a1;
+				if(variableNameLocal!=null && variableNameLocal.equals(variableName)){
+				//This has to be replaced by the element provided
+				a.a1= null;
+				a.a=element;
+				}
+		 }
+		 
+		 if(!isSimple(b)){
+		 zoom2(b.a, b.b, variableName, element);
+		 }
+		 
+		 else{
+				String variableNameLocal = b.a1;
+				if(variableNameLocal!=null && variableNameLocal.equals(variableName)){
+				//This has to be replaced by the element provided
+				b.a1= null;
+				b.a=element;
+				}
+		 }
+		 
+	 }
+	 
+	 
+	 
+	 
+	 
+	 /**Computes the mathematical value of the Element by substituting all the 
 	 * variables with the provided values.
 	 * 
 	 * @param valueMap Map containing the variable name as the key and the variable value as the value.
+     * @throws UnAssignedValueException 
 	 */
     
-    public Integer evaluate(Map valueMap){
+    public Integer evaluate(Map valueMap) throws UnAssignedValueException{
     	
     	
-    ValueElement a = (ValueElement) applyOperator(this.a,this.b,this.operator);
+    ValueElement a = (ValueElement) applyOperator(this.a,this.b,this.operator,valueMap);
     	    	
     return a.getValue();
     }
     
     
     
-    private Element applyOperator(Element element1,Element element2,String operator){
+    private Element applyOperator(Element element1,Element element2,String operator,Map valueMap) throws UnAssignedValueException{
     	
     
     	
     	if(isSimple(element1) && isSimple(element2)){
     	
-    	 return calculate((ValueElement)element1,(ValueElement)element2,operator);
+    	 return calculate(new ValueElement(element1,valueMap), 
+    			          new ValueElement(element2,valueMap),
+    			          operator);
     	}
     	
     	else if(isSimple(element1) && !isSimple(element2)){
     		
-    		applyOperator(new ValueElement(element1), 
-  			              applyOperator(element2.a,element2.b,element2.operator),
-  			              operator);
+    		applyOperator(new ValueElement(element1,valueMap), 
+  			              applyOperator(element2.a,element2.b,element2.operator,valueMap),
+  			              operator,
+  			              valueMap);
     		
     	}
     	
     	else if(!isSimple(element1) && isSimple(element2)){
     		
-    		applyOperator(applyOperator(element1.a,element1.b,element1.operator), 
-    				     new ValueElement(element2),
-		                 operator);
+    		applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
+    				     new ValueElement(element2,valueMap),
+		                 operator,
+		                 valueMap);
     		
     	 }
     	
     	else{
     	
-    	 applyOperator(applyOperator(element1.a,element1.b,element1.operator), 
-    			      applyOperator(element2.a,element2.b,element2.operator),
-    			      operator);
+    	 applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
+    			      applyOperator(element2.a,element2.b,element2.operator,valueMap),
+    			      operator,
+    			      valueMap);
     	
     	}
     	
