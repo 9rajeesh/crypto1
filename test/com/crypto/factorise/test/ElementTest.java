@@ -203,15 +203,15 @@ public class ElementTest {
 		Element e10 = new Element(e8,e9,"+");
 		
 		
-		Element e11 = new Element(e10,e3.clone(),"*");
+		Element e11 = new Element(e10,e3,"*");
 		
 		Map a = new HashMap();
 		a.put("a0", new Integer(10));
 		a.put("a1", new Integer(2));
 		a.put("a2", new Integer(10));
 		a.put("a3", new Integer(10));
-		
-		
+		a.put("a3", new Integer(10));
+		a.put("a11", new Integer(9));
 		a.put("a4", new Integer(10));
 		a.put("a5", new Integer(9));
 		
