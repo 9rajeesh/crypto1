@@ -221,10 +221,10 @@ public class ElementTest {
 		
 	    Element e44 = e11.clone();
 		
-		//e44.bindTo("a3", e3.clone());
+		e44.bindTo("a2", e3.clone());
 		
-		//Integer a3 = e44.evaluate(a);
-		//assertEquals(a3,new Integer(2400));
+		Integer a3 = e44.evaluate(a);
+		assertEquals(a3,new Integer(2600));
 		
 	}
 	

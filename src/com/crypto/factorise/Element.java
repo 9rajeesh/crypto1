@@ -255,7 +255,9 @@ public class Element implements Serializable {
 				if(variableNameLocal!=null && variableNameLocal.equals(variableName)){
 				//This has to be replaced by the element provided
 				b.a1= null;
-				b.a=element;
+				b.a=element.a;
+				b.b=element.b;
+				b.operator=element.operator;
 				}
 		 }
 		 
@@ -281,9 +283,9 @@ public class Element implements Serializable {
     
     private Element applyOperator(Element element1,Element element2,String operator,Map valueMap) throws UnAssignedValueException{
     	
-    
+ 
     	
-    	if(isSimple(element1) && isSimple(element2)){
+    if(isSimple(element1) && isSimple(element2)){
     	
     	 return calculate(new ValueElement(element1,valueMap), 
     			          new ValueElement(element2,valueMap),

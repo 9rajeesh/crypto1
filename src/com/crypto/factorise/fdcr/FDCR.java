@@ -41,7 +41,7 @@ public class FDCR {
 		 if(check(p1string,pstring)){
 			 
 			 
-			 System.out.println(istring+"     "+jstring);
+			 System.out.println(i+ "  " +istring+"     "+j+"  "+jstring);
 		 }
 		 
 		 
@@ -67,7 +67,7 @@ public class FDCR {
 	}
 
 
-	private static String createString(Integer product2, int i) {
+	protected static String createString(Integer product2, int i) {
 	
 		String value = product2.toBinaryString(product2);
 	
