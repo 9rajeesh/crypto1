@@ -226,6 +226,137 @@ public class ElementTest {
 		Integer a3 = e44.evaluate(a);
 		assertEquals(a3,new Integer(2600));
 		
+		
+        Element e441 = e11.clone();
+		
+		e441.bindTo("a5", e3.clone());
+		
+		Integer a2 = e441.evaluate(a);
+		assertEquals(a2,new Integer(4600));
+		
+		
+		
 	}
+	
+	@Test
+	public  void doTest6() throws UnAssignedValueException, CloneNotSupportedException{
+		
+		
+		Element e1 = new Element("a0");
+		Element e2 = new Element("a1");
+		
+		Element e3 = new Element(e1,e2,"*");
+		
+		Element e4 = new Element(e3,"k0");
+		
+		Map a = new HashMap();
+		a.put("a0", new Integer(1));
+		a.put("a1", new Integer(2));
+		
+		Integer a4 = e4.evaluate(a);
+		assertEquals(a4,new Integer(0));
+	}
+	
+	
+	@Test
+	public  void doTest7() throws UnAssignedValueException, CloneNotSupportedException{
+		
+		
+		Element e1 = new Element("a0");
+		Element e2 = new Element("a1");
+		
+		Element e3 = new Element(e1,e2,"*");
+		
+		Element e4 = new Element(e3,"k1");
+		
+		Map a = new HashMap();
+		a.put("a0", new Integer(1));
+		a.put("a1", new Integer(2));
+		
+		Integer a4 = e4.evaluate(a);
+		assertEquals(a4,new Integer(1));
+	}
+	
+	
+	@Test
+	public  void doTest8() throws UnAssignedValueException, CloneNotSupportedException{
+		
+		
+		Element e1 = new Element("a0");
+		Element e2 = new Element("a1");
+		
+		Element e3 = new Element(e1,e2,"*");
+		
+		Element e4 = new Element(e3,"k2");
+		
+		Map a = new HashMap();
+		a.put("a0", new Integer(10));
+		a.put("a1", new Integer(2));
+		
+		Integer a4 = e4.evaluate(a);
+		assertEquals(a4,new Integer(1));
+	}
+	
+	
+	@Test
+	public  void doTest9() throws UnAssignedValueException, CloneNotSupportedException {
+		
+		
+		Element e1 = new Element("a0");
+		Element e2 = new Element("a1");
+		
+		
+		
+		Element e3 = new Element(e1,e2,"*");
+		
+		Element e5 = new Element("a2");
+	
+		Element e6 = new Element(e5,e3,"+");
+		
+		
+		
+		Element e4 = new Element(e6,"k2");
+		
+		Map a = new HashMap();
+		a.put("a0", new Integer(10));
+		a.put("a1", new Integer(2));
+		a.put("a2", new Integer(5));
+		
+		System.out.println("Evaluated"+e6.evaluate(a));
+		
+		Integer a4 = e4.evaluate(a);
+		assertEquals(a4,new Integer(0));
+	}
+	
+	@Test
+	public  void doTest10() throws UnAssignedValueException, CloneNotSupportedException {
+		
+		
+		Element e1 = new Element("a0");
+		Element e2 = new Element("a1");
+		
+		
+		
+		Element e3 = new Element(e1,e2,"*");
+		
+		Element e5 = new Element("a2");
+	
+		Element e6 = new Element(e5,e3,"+");
+		
+		
+		
+		Element e4 = new Element(e6,"k4");
+		
+		Map a = new HashMap();
+		a.put("a0", new Integer(10));
+		a.put("a1", new Integer(2));
+		a.put("a2", new Integer(5));
+		
+		System.out.println("Evaluated"+e6.evaluate(a));
+		
+		Integer a4 = e4.evaluate(a);
+		assertEquals(a4,new Integer(1));
+	}
+	
 	
 }

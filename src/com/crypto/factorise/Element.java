@@ -283,9 +283,23 @@ public class Element implements Serializable {
     
     private Element applyOperator(Element element1,Element element2,String operator,Map valueMap) throws UnAssignedValueException{
     	
- 
+       ///bug fix to handle k
+    	if(isSimple(element1) && element2==null){
+        	
+       	 return calculate(new ValueElement(element1,valueMap), 
+       			          null,
+       			          operator);
+       	}
     	
-    if(isSimple(element1) && isSimple(element2)){
+    	else if(!isSimple(element1) && element2==null){
+        	
+       	 return applyOperator(applyOperator(element1.a,element1.b,element1.operator,valueMap), 
+       			          null,
+       			          operator,
+       			          valueMap);
+       	}
+    	
+    	else  if(isSimple(element1) && isSimple(element2)){
     	
     	 return calculate(new ValueElement(element1,valueMap), 
     			          new ValueElement(element2,valueMap),
@@ -324,8 +338,33 @@ public class Element implements Serializable {
 
 	private Element calculate(ValueElement element1, ValueElement element2, String operator2) {
 	
+          if(operator2.contains("k")){
+			
+			int k1 = getModulo(operator2);
+			
+			Integer a = null;
+			
+			if(element1!=null){
+			a =	element1.getValue();
+			}
+			
+			if(element2!=null){
+			a =	element2.getValue();
+			}
+			
+			
+			char[] c = a.toBinaryString(a).toCharArray();
+			
+			int length = c.length;
+			
+			char place = c[length-k1-1];
+			
+			String placeString = Character.toString(place);
+			
+			return new ValueElement( Integer.parseInt(placeString) );
+		}
 		
-		if(operator2.equals("+")){
+        else if(operator2.equals("+")){
 		    return new ValueElement(element1.getValue() + element2.getValue());
 		}
 		
@@ -341,18 +380,7 @@ public class Element implements Serializable {
 			return new ValueElement(element1.getValue() / element2.getValue());
 		}
 		
-		else if(operator2.contains("k")){
-			
-			int k1 = getModulo(operator2);
-			
-			Integer a = element1.getValue();
-			
-			if (a ==null){
-			a = element2.getValue();
-			}
-			
-			return new ValueElement( a % k1 );
-		}
+		
 			
 		//System.out.println("returning null:");
 		return null;
