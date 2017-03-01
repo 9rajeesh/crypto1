@@ -281,7 +281,7 @@ public class Element implements Serializable {
     
     
     
-    private Element applyOperator(Element element1,Element element2,String operator,Map valueMap) throws UnAssignedValueException{
+    private Element applyOperator(Element element1,Element element2,String operator,Map valueMap) throws UnAssignedValueException {
     	
        ///bug fix to handle k
     	if(isSimple(element1) && element2==null){
@@ -333,7 +333,7 @@ public class Element implements Serializable {
     	
     	}
     	
-   
+  
     }
 
 	private Element calculate(ValueElement element1, ValueElement element2, String operator2) {
@@ -370,6 +370,9 @@ public class Element implements Serializable {
 		
 		else if(operator2.equals("-")){
 			return new ValueElement(element1.getValue() - element2.getValue());
+		}
+		else if(operator2.equals("and")){
+			return new ValueElement(element1.getValue() * element2.getValue());
 		}
 		
 		else if(operator2.equals("*")){
