@@ -1,9 +1,11 @@
 package com.crypto.factorise.solver;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.crypto.factorise.Element;
 import com.crypto.factorise.ValueElement;
+import com.crypto.factorise.exceptions.UnAssignedValueException;
 
 public class FactorisationEquationFactory {
 
@@ -12,11 +14,17 @@ public class FactorisationEquationFactory {
 	private String b = "";
 	private String product = "";
 	
-	int max=8;
+	int max =8;
 	
 	
+	public static void main(String[] args) throws UnAssignedValueException{
+		
+		FactorisationEquationFactory factorisationEquationFactory = new FactorisationEquationFactory();
+		factorisationEquationFactory.generate();
+	}
 	
-	public void generate(){
+	
+	public void generate() throws UnAssignedValueException{
 		
 		Element e0 =  new Element(generateVerticalAndHorizontal(0),"k0");
 		Element e1 =  new Element(generateVerticalAndHorizontal(1),"k1");
@@ -34,6 +42,18 @@ public class FactorisationEquationFactory {
 		Element e13 = new Element(generateVerticalAndHorizontal(13),"k13");
 		Element e14 = new Element(generateVerticalAndHorizontal(14),"k14");
 		Element e15 = new Element(generateVerticalAndHorizontal(15),"k15");
+		
+		
+		Map a = new HashMap();
+		a.put("a0", 1);
+		a.put("b0", 1);
+		a.put("a1", 1);
+		a.put("b1", 1);
+		a.put("a2", 1);
+		a.put("b2", 1);
+		
+		Integer a5 = e2.evaluate(a);
+		System.out.println("Value is:"+a5);
 		
 	}
 	
