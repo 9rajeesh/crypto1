@@ -9,9 +9,8 @@ public class TestExecute {
 	
 
 		   public static void main(String[] args) {
-		      Result result = JUnitCore.runClasses(ElementTest.class);
+		      Result result = JUnitCore.runClasses(ElementTest.class,FactorisationEquationFactoryTest.class);
 		      
-		    
 				
 		      for (Failure failure : result.getFailures()) {
 		    	 failure.getDescription();
@@ -23,6 +22,10 @@ public class TestExecute {
 		      }
 		      System.out.println("Total cases run:"+result.getRunCount());
 		      System.out.println("Final result:"+result.wasSuccessful());
+		   
+		   
 		   }
-		}  
+		 
+}   
+		
 

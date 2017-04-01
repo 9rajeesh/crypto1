@@ -17,14 +17,14 @@ public class FactorisationEquationFactory {
 	int max =8;
 	
 	
-	public static void main(String[] args) throws UnAssignedValueException{
+	public static void main(String[] args) throws UnAssignedValueException {
 		
 		FactorisationEquationFactory factorisationEquationFactory = new FactorisationEquationFactory();
 		factorisationEquationFactory.generate();
 	}
 	
 	
-	public void generate() throws UnAssignedValueException{
+	public void generate() throws UnAssignedValueException {
 		
 		Element e0 =  new Element(generateVerticalAndHorizontal(0),"k0");
 		Element e1 =  new Element(generateVerticalAndHorizontal(1),"k1");
@@ -113,6 +113,8 @@ public class FactorisationEquationFactory {
 	}
 
 
+
+
 	public void generateFirst(){
 			
 			
@@ -123,19 +125,25 @@ public class FactorisationEquationFactory {
 		
 	}
 	
+
+	
+	//calculates conjugate of an Element as an Integer using values specified in a valueMap
+	public Integer conjugate(Element a,Map valueMap) throws UnAssignedValueException {
+	Map conjugatedValueMap = getConjugatedValueMap(valueMap);
+	return a.evaluate(conjugatedValueMap);
+	}
+	
+	private Map getConjugatedValueMap(Map valueMap) {
+		
+		
+	return null;
+	}
+
+
 	//calculates conjugate of an Element
 	public Element conjugate(Element a){
 		
 		
 	return null;
 	}
-	
-	//calculates conjugate of an Element as an Integer using values specified in a valueMap
-	public Integer conjugate(Element a,Map valueMap){
-		
-		
-	return null;
-	}
-	
-	
 }
