@@ -351,11 +351,16 @@ public class Element implements Serializable {
 			if(element2!=null){
 			a =	element2.getValue();
 			}
-			
+				
 			
 			char[] c = a.toBinaryString(a).toCharArray();
 			
 			int length = c.length;
+			
+			//String value length less than k
+			if(length-k1-1<0){
+			return new ValueElement( Integer.parseInt("0") );
+			}
 			
 			char place = c[length-k1-1];
 			
@@ -390,6 +395,14 @@ public class Element implements Serializable {
 	}
 	
 	
+
+	private char[] lpad(char[] charArray, int k1) {
+		
+		
+		
+		
+		return charArray;
+	}
 
 	public Element getA() {
 		return a;
