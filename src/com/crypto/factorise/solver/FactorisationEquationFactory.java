@@ -10,12 +10,22 @@ import com.crypto.factorise.exceptions.UnAssignedValueException;
 public class FactorisationEquationFactory {
 
 	
-	private String a = "";
-	private String b = "";
+	private String a = "a";
+	private String b = "b";
 	private String product = "";
 	
 	int max =8;
 	
+	public FactorisationEquationFactory(String a,String b){
+		this.a=a;
+		this.b=b;
+	}
+	
+	
+	public FactorisationEquationFactory(){
+		this.a="a";
+		this.b="b";
+	}
 	
 	public static void main(String[] args) throws UnAssignedValueException {
 		
@@ -95,8 +105,8 @@ public class FactorisationEquationFactory {
 		
 		for(int i=abegin,j=bbegin;i<=aend && j>=0;i++,j--){
 			
-			String a = "a";
-			String b = "b";
+			String a = this.a;
+			String b = this.b;
 			a = a + i;
 			b = b + j;
 			
